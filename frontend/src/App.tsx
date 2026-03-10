@@ -1,5 +1,7 @@
-// import { ENV } from "./constants"
+import axios from "axios";
 import { useState, type FormEvent } from "react";
+
+const API_URL = import.meta.env.API_URL;
 
 interface InputFieldProps {
   name: string;
@@ -39,6 +41,26 @@ export default function App() {
   const handleOnAddUser = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState("processing");
+
+    try {
+      // Tries to add user using DJango REST Framework
+      await axios.post(`${API_URL}/api/user`, {
+        name: inputFields.name,
+        age: inputFields.age,
+        address: inputFields.address
+      });
+
+      // UI
+      setFormState("success");
+
+      // Clears the input
+      setInputFields(INPUT_FIELDS_DEFAULT_VALUES);
+    } catch (e: unknown) {
+      alert("Failed to add new user!");
+      console.error(`Error adding new user: ${e instanceof Error ? e.message : String(e)}`);
+      setFormState("error");
+    } 
+
   }
 
   return (
