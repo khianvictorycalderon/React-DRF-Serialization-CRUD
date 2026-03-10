@@ -8,6 +8,7 @@ A simple CRUD for full-stack with serialization
 
 ## Preview
 ![React + Django REST Framework + Serialization CRUD Preview](preview.png)
+![React + Django REST Framework + Serialization CRUD Preview](preview_popup.png)
 
 ## Setup
 1. Clone this repository via `git clone https://github.com/khianvictorycalderon/React-DRF-Serialization-CRUD.git`
