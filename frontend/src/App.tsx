@@ -164,7 +164,7 @@ export default function App() {
             </thead>
             <tbody>
               {users.map(user => (
-                <tr key={user.id} className="border-t border-gray-200 hover:bg-gray-50">
+                <tr key={user.id} className="border-t border-gray-200 hover:bg-neutral-200">
                   <td className="px-4 py-2 break-all">{user.id}</td>
                   <td className="px-4 py-2">{user.name}</td>
                   <td className="px-4 py-2">{user.age}</td>
