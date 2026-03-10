@@ -135,9 +135,97 @@ export default function App() {
     }
   };
   // -----------------------------------------------------------------
+  
+  // -------------------- UPDATE USER --------------------------------
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editInputFields, setEditInputFields] = useState<InputFieldProps>(INPUT_FIELDS_DEFAULT_VALUES);
+  const [editFormState, setEditFormState] = useState<FormState>("default");
+  const handleEditClick = (user: User) => {
+    setEditingUser(user); // store the user being edited
+    setEditInputFields({
+      name: user.name,
+      age: user.age,
+      address: user.address
+    });
+    setIsEditModalOpen(true);
+  };
+  // -----------------------------------------------------------------
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center py-16">
+
+      {isEditModalOpen && editingUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Edit User: {editingUser.id}</h2>
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              if (!editingUser) return;
+
+              setEditFormState("processing");
+              try {
+                await axios.patch(`${API_URL}/api/user/${editingUser.id}/`, editInputFields);
+                await fetchUsers();
+                setIsEditModalOpen(false);
+                setEditingUser(null);
+                setEditInputFields(INPUT_FIELDS_DEFAULT_VALUES);
+                setEditFormState("success");
+              } catch (err) {
+                console.error(err);
+                alert("Failed to update user!");
+                setEditFormState("error");
+              }
+            }}>
+              <div className="flex flex-col gap-2">
+                <label className="font-medium">Name:</label>
+                <input
+                  type="text"
+                  value={editInputFields.name}
+                  onChange={e => setEditInputFields(prev => ({ ...prev, name: e.target.value }))}
+                  className="border px-2 py-1 rounded"
+                  required
+                />
+
+                <label className="font-medium">Age:</label>
+                <input
+                  type="number"
+                  value={editInputFields.age}
+                  onChange={e => setEditInputFields(prev => ({ ...prev, age: e.currentTarget.valueAsNumber }))}
+                  className="border px-2 py-1 rounded"
+                  required
+                />
+
+                <label className="font-medium">Address:</label>
+                <input
+                  type="text"
+                  value={editInputFields.address}
+                  onChange={e => setEditInputFields(prev => ({ ...prev, address: e.target.value }))}
+                  className="border px-2 py-1 rounded"
+                  required
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={editFormState === "processing"}
+                  className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 disabled:bg-yellow-300"
+                >
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div className="text-center">
         
@@ -265,6 +353,7 @@ export default function App() {
                     </button>
                     <button
                       disabled={rowActionDisabled[user.id] || false}
+                      onClick={() => handleEditClick(user)}
                       className="
                         px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 cursor-pointer
                         disabled:bg-yellow-300 disabled:text-gray-200 disabled:cursor-not-allowed
