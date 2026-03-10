@@ -158,7 +158,7 @@ export default function App() {
       {isEditModalOpen && editingUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="bg-white p-6 rounded shadow-lg w-96">
-            <h2 className="text-xl font-bold mb-4">Edit User: {editingUser.id}</h2>
+            <h2 className="text-xl font-bold mb-4 text-center">Edit User</h2>
             <form onSubmit={async (e) => {
               e.preventDefault();
               if (!editingUser) return;
