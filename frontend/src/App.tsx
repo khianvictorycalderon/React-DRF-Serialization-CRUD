@@ -38,6 +38,7 @@ export default function App() {
 
   const handleOnAddUser = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setFormState("processing");
     alert("Submitted!");
   }
 
@@ -50,31 +51,34 @@ export default function App() {
         <form onSubmit={handleOnAddUser}>
           <div className="flex flex-row gap-4 w-full">
             {fields.map(({ id, label, type }) => {
-              // Determine value safely
-              let value: string | number;
               const fieldValue = inputFields[id as keyof InputFieldProps];
-
-              if (type === "number") {
-                value = typeof fieldValue === "number" && !isNaN(fieldValue) ? fieldValue : "";
-              } else {
-                value = fieldValue ?? "";
-              }
+              const value =
+                type === "number"
+                  ? typeof fieldValue === "number" && !isNaN(fieldValue)
+                    ? fieldValue
+                    : ""
+                  : fieldValue ?? "";
 
               return (
                 <div key={id} className="flex flex-col">
-                  <label htmlFor={id} className="mb-1 font-medium text-gray-700">{label}:</label>
+                  <label htmlFor={id} className="mb-1 font-medium text-gray-700">
+                    {label}:
+                  </label>
                   <input
                     disabled={formState === "processing"}
                     id={id}
                     type={type}
-                    className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`
+                      border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
+                      ${formState === "processing"
+                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                        : "border-gray-300"}
+                    `}
                     value={value}
                     onChange={(e) =>
                       handleInputChange(
                         id as keyof InputFieldProps,
-                        type === "number"
-                          ? e.currentTarget.valueAsNumber
-                          : e.currentTarget.value
+                        type === "number" ? e.currentTarget.valueAsNumber : e.currentTarget.value
                       )
                     }
                   />
@@ -82,7 +86,18 @@ export default function App() {
               );
             })}
           </div>
-          <input disabled={formState === "processing"} className="bg-green-600 text-white cursor-pointer mt-4 px-6 py-2" type="submit" value="Add" />
+
+          <input
+            disabled={formState === "processing"}
+            type="submit"
+            value="Add"
+            className={`
+              mt-4 px-6 py-2 rounded text-white font-medium
+              ${formState === "processing"
+                ? "bg-green-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"}
+            `}
+          />
         </form>
 
       </div>
