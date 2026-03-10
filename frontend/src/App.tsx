@@ -39,7 +39,6 @@ export default function App() {
   const handleOnAddUser = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState("processing");
-    alert("Submitted!");
   }
 
   return (
@@ -68,12 +67,11 @@ export default function App() {
                     disabled={formState === "processing"}
                     id={id}
                     type={type}
-                    className={`
-                      border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500
-                      ${formState === "processing"
-                        ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                        : "border-gray-300"}
-                    `}
+                    className="
+                      border border-gray-300 rounded px-3 py-2
+                      focus:outline-none focus:ring-2 focus:ring-blue-500
+                      disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
+                    "
                     value={value}
                     onChange={(e) =>
                       handleInputChange(
@@ -91,12 +89,11 @@ export default function App() {
             disabled={formState === "processing"}
             type="submit"
             value="Add"
-            className={`
+            className="
               mt-4 px-6 py-2 rounded text-white font-medium
-              ${formState === "processing"
-                ? "bg-green-400 cursor-not-allowed"
-                : "bg-green-600 hover:bg-green-700"}
-            `}
+              bg-green-600 hover:bg-green-700 cursor-pointer
+              disabled:bg-green-400 disabled:cursor-not-allowed
+            "
           />
         </form>
 
