@@ -26,20 +26,18 @@ A simple CRUD for full-stack with serialization
     DJANGO_ENV=development
     DJANGO_SECRET_KEY=your-key-here
     DEBUG=True
-    ALLOWED_HOSTS=127.0.0.1 localhost https://apixer.vercel.app
-    CORS_ALLOWED_ORIGINS=http://127.0.0.1:8001 http://localhost:8001 https://apixer.vercel.app
-    CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8001 http://localhost:8001 https://apixer.vercel.app
     ```
+3. Go to `backend/settings.py` and look for the `HOSTS` part and update it depending on your frontend.
     Change the allowed and trusted credentials depending on where you want your project to be tested.
-3. Run the following command for database migration:
+4. Run the following command for database migration:
     - `python manage.py makemigrations` or `py manage.py makemigrations`
     - `python manage.py migrate` or `py manage.py migrate`
-4. To run the server, run `py manage.py runserver` or `python manage.py runserver`
+5. To run the server, run `py manage.py runserver` or `python manage.py runserver`
     NOTE: If you encounter `Error: You don't have permission to access that port.`, just use a different port, for example:
     - `py manage.py runserver 8001`
     - `python manage.py runserver 8002`
     8001 and 8002 are the port.
-5. To create another app, just run `python manage.py startapp <app-name>` or `py manage.py startapp <app-name>`, example: `py manage.py startapp myapp`
+6. To create another app, just run `python manage.py startapp <app-name>` or `py manage.py startapp <app-name>`, example: `py manage.py startapp myapp`
 
 ## Backend Admin
 1. To access the database using admin panel type in the url: "/admin"

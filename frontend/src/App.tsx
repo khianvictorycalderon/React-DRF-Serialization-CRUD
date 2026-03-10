@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, type FormEvent } from "react";
 
-const API_URL = import.meta.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface InputFieldProps {
   name: string;
@@ -44,7 +44,7 @@ export default function App() {
 
     try {
       // Tries to add user using DJango REST Framework
-      await axios.post(`${API_URL}/api/user`, {
+      await axios.post(`${API_URL}/api/user/`, {
         name: inputFields.name,
         age: inputFields.age,
         address: inputFields.address

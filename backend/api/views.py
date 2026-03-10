@@ -1,4 +1,7 @@
-from django.shortcuts import HttpResponse
+from rest_framework import viewsets
+from .models import User
+from .serializers import UserSerializer
 
-def home(request):
-    return HttpResponse("API homepage")
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

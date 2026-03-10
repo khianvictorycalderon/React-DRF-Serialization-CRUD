@@ -36,10 +36,11 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 # WARNING: Turn of debug on production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-# Misc variables necessary
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split() or []
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "").split() or []
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split() or []
+# HOSTS part, change any of these for your frontend
+# CORS_ALLOWED_CREDENTIALS = True # If you want cookies
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 # --------------------------------------------------------------------------------------------
 
 # Application definition
