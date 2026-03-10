@@ -202,7 +202,6 @@ export default function App() {
                   <th className="px-4 py-2 text-left">Name</th>
                   <th className="px-4 py-2 text-left">Age</th>
                   <th className="px-4 py-2 text-left">Address</th>
-                  <th className="px-4 py-2 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -211,29 +210,6 @@ export default function App() {
                   <td className="px-4 py-2">{fetchedUser.name}</td>
                   <td className="px-4 py-2">{fetchedUser.age}</td>
                   <td className="px-4 py-2">{fetchedUser.address}</td>
-                  <td className="px-4 py-2 flex gap-2">
-                    <button
-                      onClick={() => handleCopyID(fetchedUser.id)}
-                      className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer 
-                                disabled:bg-blue-400 disabled:cursor-not-allowed"
-                    >
-                      Copy ID
-                    </button>
-                    <button
-                      disabled
-                      className="px-2 py-1 bg-yellow-500 text-white rounded cursor-pointer
-                                disabled:bg-yellow-300 disabled:text-gray-200 disabled:cursor-not-allowed"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      disabled
-                      className="px-2 py-1 bg-red-600 text-white rounded cursor-pointer
-                                disabled:bg-red-400 disabled:text-gray-200 disabled:cursor-not-allowed"
-                    >
-                      Delete
-                    </button>
-                  </td>
                 </tr>
               </tbody>
             </table>
