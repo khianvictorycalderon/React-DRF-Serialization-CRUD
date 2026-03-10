@@ -123,6 +123,7 @@ export default function App() {
                       focus:outline-none focus:ring-2 focus:ring-blue-500
                       disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
                     "
+                    required
                     value={value}
                     onChange={(e) =>
                       handleInputChange(
