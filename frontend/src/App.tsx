@@ -93,7 +93,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center">
+    <div className="min-h-screen w-full flex justify-center items-center py-16">
 
       <div className="text-center">
         
