@@ -6,19 +6,19 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface User {
   id: string;
   name: string;
-  age: number;
+  age: number | null;
   address: string;
 }
 
 interface InputFieldProps {
   name: string;
-  age: number;
+  age: number | null;
   address: string;
 }
 
 const INPUT_FIELDS_DEFAULT_VALUES: InputFieldProps = {
   name: "",
-  age: 0,
+  age: null,
   address: ""
 }
 
@@ -190,8 +190,14 @@ export default function App() {
                 <label className="font-medium">Age:</label>
                 <input
                   type="number"
-                  value={editInputFields.age}
-                  onChange={e => setEditInputFields(prev => ({ ...prev, age: e.currentTarget.valueAsNumber }))}
+                  value={editInputFields.age !== null ? editInputFields.age : ""}
+                  onChange={e => {
+                    const val = e.currentTarget.value;
+                    setEditInputFields(prev => ({
+                      ...prev,
+                      age: val === "" ? null : Number(val)  // convert empty string to null
+                    }));
+                  }}
                   className="border px-2 py-1 rounded"
                   required
                 />
@@ -257,12 +263,17 @@ export default function App() {
                     "
                     required
                     value={value}
-                    onChange={(e) =>
-                      handleInputChange(
-                        id as keyof InputFieldProps,
-                        type === "number" ? e.currentTarget.valueAsNumber : e.currentTarget.value
-                      )
-                    }
+                    onChange={(e) => {
+                      if (type === "number") {
+                        const val = e.currentTarget.value;
+                        handleInputChange(
+                          id as keyof InputFieldProps,
+                          val === "" ? null : Number(val)  // empty string → null, else number
+                        );
+                      } else {
+                        handleInputChange(id as keyof InputFieldProps, e.currentTarget.value);
+                      }
+                    }}
                   />
                 </div>
               );
