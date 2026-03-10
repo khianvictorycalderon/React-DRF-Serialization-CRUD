@@ -242,7 +242,7 @@ export default function App() {
 
         {/* Users Table */}
         <div className="flex-1 max-w-2xl mt-8">
-          <h2 className="text-2xl font-bold mb-4">Users</h2>
+          <h2 className="text-2xl font-bold mb-4">All Users</h2>
           <table className="w-full border border-gray-300 rounded-lg overflow-hidden">
             <thead className="bg-gray-100">
               <tr>
