@@ -116,6 +116,25 @@ export default function App() {
     } 
   }
   // -----------------------------------------------------------------
+  
+  // -------------------- DELETE USER --------------------------------
+  // Map of user IDs to their action disabled state
+  const [rowActionDisabled, setRowActionDisabled] = useState<Record<string, boolean>>({});
+  const handleDeleteUser = async (id: string) => {
+    setRowActionDisabled(prev => ({ ...prev, [id]: true }));
+
+    try {
+      await axios.delete(`${API_URL}/api/user/${id}/`);
+      await fetchUsers();
+      if (fetchedUser?.id === id) setFetchedUser(null);
+    } catch (e) {
+      console.error("Failed to delete user:", e);
+      alert("Failed to delete user.");
+    } finally {
+      setRowActionDisabled(prev => ({ ...prev, [id]: false }));
+    }
+  };
+  // -----------------------------------------------------------------
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center py-16">
@@ -245,16 +264,21 @@ export default function App() {
                       Copy ID
                     </button>
                     <button
-                      disabled={false}
-                      className="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 cursor-pointer
-                                disabled:bg-yellow-300 disabled:text-gray-200 disabled:cursor-not-allowed"
+                      disabled={rowActionDisabled[user.id] || false}
+                      className="
+                        px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 cursor-pointer
+                        disabled:bg-yellow-300 disabled:text-gray-200 disabled:cursor-not-allowed
+                      "
                     >
                       Edit
                     </button>
                     <button
-                      disabled={false}
-                      className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer
-                                disabled:bg-red-400 disabled:text-gray-200 disabled:cursor-not-allowed"
+                      onClick={() => handleDeleteUser(user.id)}
+                      disabled={rowActionDisabled[user.id] || false}
+                      className="
+                        px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer
+                        disabled:bg-red-400 disabled:cursor-not-allowed
+                      "
                     >
                       Delete
                     </button>
